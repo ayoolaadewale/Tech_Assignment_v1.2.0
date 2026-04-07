@@ -12,10 +12,13 @@ The recommended structure uses four accounts managed under a single AWS Organisa
 | Development | Active development & CI | EKS dev cluster, RDS dev, CI/CD runners | Open developer access
 
 Justification
-•	Blast radius containment: A security incident in Development cannot reach Production credentials, data, or network.
-•	Compliance boundary: Sensitive user data in Production is isolated. Audit logs (CloudTrail) are centralised in the Management account, where developers cannot tamper with them.
-•	Cost visibility: Each account maps to a business environment. Engineers immediately see the cost of their workloads without manual tagging gymnastics.
-•	Permission model: Developers log into IAM Identity Center once and assume roles into the appropriate account with only the permissions they need — read-only in Production by default, admin in Development.
+1. Blast radius containment: A security incident in Development cannot reach Production credentials, data, or network.
+
+2. Compliance boundary: Sensitive user data in Production is isolated. Audit logs (CloudTrail) are centralised in the Management account, where developers cannot tamper with them.
+
+3. Cost visibility: Each account maps to a business environment. Engineers immediately see the cost of their workloads without manual tagging gymnastics.
+
+4. Permission model: Developers log into IAM Identity Center once and assume roles into the appropriate account with only the permissions they need — read-only in Production by default, admin in Development.
 
 ## Network Design (VPC)
 
