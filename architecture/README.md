@@ -12,6 +12,7 @@ The recommended structure uses four accounts managed under a single AWS Organisa
 | Development | Active development & CI | EKS dev cluster, RDS dev, CI/CD runners | Open developer access
 
 Justification
+
 1. Blast radius containment: A security incident in Development cannot reach Production credentials, data, or network.
 
 2. Compliance boundary: Sensitive user data in Production is isolated. Audit logs (CloudTrail) are centralised in the Management account, where developers cannot tamper with them.
