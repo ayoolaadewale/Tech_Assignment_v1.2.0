@@ -1,4 +1,4 @@
-### High Level Design Multi-Accoutn Setup
+## High Level Design Multi-Accoutn Setup
 
 Innovate Inc. should adopt a multi-account AWS organisation from day one. It is the minimum viable security posture for a company handling sensitive user data. A single AWS account for everything creates blast radius problems: a misconfigured IAM role, a compromised access key, or a runaway script can affect all environments simultaneously.
 
@@ -17,7 +17,7 @@ Justification
 •	Cost visibility: Each account maps to a business environment. Engineers immediately see the cost of their workloads without manual tagging gymnastics.
 •	Permission model: Developers log into IAM Identity Center once and assume roles into the appropriate account with only the permissions they need — read-only in Production by default, admin in Development.
 
-### Network Design (VPC)
+## Network Design (VPC)
 
 Architecture: A Regional VPC spanning three Availability Zones (AZs) for high availability.
 
@@ -39,7 +39,7 @@ EKS Node SG: Allows traffic only from the ALB SG.
 
 RDS SG: Allows traffic only from the EKS Node SG on port 5432.
 
-### Compute Platform: Managed Kubernetes (EKS)
+## Compute Platform: Managed Kubernetes (EKS)
 
 We will utilize Amazon EKS as the orchestration engine, optimized for cost-efficiency.
 
@@ -73,7 +73,7 @@ GitHub Actions builds the image and pushes to ECR.
 
 A Helm chart is updated, and ArgoCD (or a simple kubectl apply) syncs the state to the EKS cluster.
 
-### Database
+## Database
 
 Amazon RDS for PostgreSQL is the recommended database service. RDS manages OS patching, minor version upgrades, automated backups, and Multi-AZ failover.
 
@@ -81,7 +81,7 @@ Justification:
 Managed Patching: AWS handles OS and DB engine security updates.
 Multi-AZ Deployment: RDS automatically maintains a synchronous standby in a different AZ. If the primary fails, it fails over in <60 seconds with no manual intervention.
 
-## High Availability
+### High Availability
 Multi-AZ Deployment
 RDS Multi-AZ maintains a synchronous standby replica in a second Availability Zone. AWS monitors the primary and promotes the standby automatically if:
 •	The primary instance or its underlying hardware fails
@@ -93,7 +93,7 @@ Failover time: 60–120 seconds automatically, with no application code change r
 Read Replicas
 As traffic grows, read-heavy queries (reporting, analytics, listing endpoints) should be directed to one or more Read Replicas. Read Replicas are asynchronous replicas that can also serve as a warm standby for disaster recovery in a second AWS Region.
 
-## Backups & DR
+### Backups & DR
 Daily Snapshots: Retained for 35 days.
 
 Point-in-Time Recovery (PITR): Allows restoring the database to any specific second within the retention period (critical for accidental data deletion).
